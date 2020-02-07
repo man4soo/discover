@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -40,10 +39,16 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if(mRestaurant.isEmpty()) return;
-        Restaurant restaurant = mRestaurant.get(position);
-        holder.reviewTextView.setText(restaurant.getDescription());
-        holder.shopNameTextView.setText(restaurant.getName());
-        Glide.with(mContext).load(restaurant.getImgUrl()).into(holder.imageView);
+        try {
+            Restaurant restaurant = mRestaurant.get(position);
+            holder.reviewTextView.setText(restaurant.getDescription());
+            holder.shopNameTextView.setText(restaurant.getName());
+            holder.distanceTextView.setText(restaurant.getStatus());
+            Glide.with(mContext).load(restaurant.getImgUrl()).into(holder.imageView);
+        } catch (Exception e) {
+            // if Url is empty
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -55,11 +60,13 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
         public ImageView imageView;
         public TextView shopNameTextView;
         public TextView reviewTextView;
+        public TextView distanceTextView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.image);
             shopNameTextView = itemView.findViewById(R.id.name);
             reviewTextView = itemView.findViewById(R.id.type);
+            distanceTextView = itemView.findViewById(R.id.status);
             // Added onClick event listener into each Review
             itemView.setOnClickListener(this);
         }

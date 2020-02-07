@@ -36,28 +36,20 @@ public class DataRepository {
     private RestaurantDao mRestaurantDao;
     private Gson mGson;
     private Set<Integer> mSet;
+    private int mLastInsertedId;
 
     @Inject
-    public DataRepository(RequestQueue requestQueue, RestaurantDao restaurantDao, Executor executor, Gson gson) {
+    public DataRepository(RequestQueue requestQueue, RestaurantDao restaurantDao, Executor executor, Gson gson, Set<Integer> set) {
         mRequestQueue = requestQueue;
         mRestaurantDao = restaurantDao;
         mExecutor = executor;
         mGson = gson;
-        mSet = new HashSet<>();
+        mSet = set;
+        mLastInsertedId = 0;
     }
 
-//    public DataRepository(Application app) {
-//        mRequestQueue = Volley.newRequestQueue(app);
-//        mRestaurantDao = Room.databaseBuilder(
-//                app.getApplicationContext(), RestaurantDB.class, "restaurant")
-//                .build()
-//                .RestaurantDao();
-//        mSet = new HashSet<>();
-//        mExecutor = Executors.newFixedThreadPool(4);
-//    }
-
     public LiveData<List<Restaurant>> getRestaurant() {
-        fetchData(0);
+        fetchData(mLastInsertedId);
         return mRestaurantDao.getAll();
     }
 
@@ -65,20 +57,16 @@ public class DataRepository {
         if(!mSet.add(start)) return;
         mExecutor.execute(() -> {
             int idx = start;
-
-            while (idx < 51 + start) {
+            while (idx <= Constants.REQUEST_BATCH_NUMBER + start) {
                 String url = Constants.BASE_URL + idx;
-               // Log.d(TAG, "url : " + url + ", isStopped : " + isStopped);
-                StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                mRequestQueue.add( new StringRequest(Request.Method.GET, url,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
                                 int currentIdx = Integer.valueOf(url.substring(url.indexOf("offset")+7));
-                                Log.d(TAG, "response : " + url + " ,currentIdx : " + currentIdx);
-
 
                                 if (response == null || response.isEmpty() || response.equals("[]")) {
-                                    Log.d(TAG, "Server response is null or empty");
+                                    Log.i(TAG, "Server response is null or empty");
                                     mSet.clear();
                                     return;
                                 }
@@ -87,10 +75,11 @@ public class DataRepository {
                                     Restaurant[] restaurants = mGson.fromJson(response, Restaurant[].class);
                                     for (Restaurant r : restaurants) {
                                         mRestaurantDao.save(r);
+                                        mLastInsertedId++;
                                     }
                                 });
 
-                                if(currentIdx != 0 && (currentIdx % 50 == 0))
+                                if(currentIdx != 0 && (currentIdx % Constants.REQUEST_BATCH_NUMBER == 0))
                                     fetchData(currentIdx);
                             }
                         }, new Response.ErrorListener() {
@@ -98,47 +87,9 @@ public class DataRepository {
                     public void onErrorResponse(VolleyError error) {
                         Log.e(TAG, "getReviewData error : " + error.toString());
                     }
-                });
-                mRequestQueue.add(stringRequest);
+                }));
                 idx += 2;
             }
         });
     }
-
-
-
-
-//    public LiveData<List<Restaurant>> getRestaurant() {
-//        final MutableLiveData<List<Restaurant>> data = new MutableLiveData<>();
-//        Gson gson = new GsonBuilder().registerTypeAdapter(Restaurant.class, new Restaurant.RestaurantDeserilizer()).create();
-//        int idx = 0;
-//        while(idx < 300) {
-//            String url = Constants.BASE_URL + idx;
-//            StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-//                    new Response.Listener<String>() {
-//                        @Override
-//                        public void onResponse(String response) {
-//                            if (response == null || response.isEmpty()) {
-//                                Log.i(TAG, "Server response is null or empty");
-//                                return;
-//                            }
-//                            // mExecutor.execute(() -> {
-//                            List<Restaurant> lists = Arrays.asList(gson.fromJson(response, Restaurant[].class));
-//                            data.setValue(lists);
-//                            // });
-//
-//                        }
-//                    }, new Response.ErrorListener() {
-//                @Override
-//                public void onErrorResponse(VolleyError error) {
-//                    Log.e(TAG, "getReviewData error : " + error.toString());
-//                }
-//            });
-//            mRequestQueue.add(stringRequest);
-//            idx += 15;
-//        }
-//        return data;
-//    }
-
-
 }

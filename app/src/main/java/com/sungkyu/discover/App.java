@@ -3,7 +3,7 @@ package com.sungkyu.discover;
 import android.app.Activity;
 import android.app.Application;
 
-//import com.sungkyu.discover.di.DaggerAppComponent;
+import com.sungkyu.discover.di.DaggerAppComponent;
 
 import javax.inject.Inject;
 
@@ -22,10 +22,10 @@ public class App extends Application implements HasActivityInjector {
     public void onCreate() {
         super.onCreate();
 
-//        DaggerAppComponent.builder()
-//                .application(this)
-//                .build()
-//                .inject(this);
+        DaggerAppComponent.builder()
+                .application(this)
+                .build()
+                .inject(this);
 
     }
 

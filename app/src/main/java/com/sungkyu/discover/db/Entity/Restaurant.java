@@ -35,13 +35,9 @@ public class Restaurant {
     @Expose
     private String imgUrl;
 
-    @SerializedName("address.lat")
+    @SerializedName("status")
     @Expose
-    private float lat;
-
-    @SerializedName("address.lng")
-    @Expose
-    private float lng;
+    private String status;
 
     @SerializedName("url")
     @Expose
@@ -80,22 +76,6 @@ public class Restaurant {
         this.imgUrl = imgUrl;
     }
 
-    public float getLat() {
-        return lat;
-    }
-
-    public void setLat(float lat) {
-        this.lat = lat;
-    }
-
-    public float getLng() {
-        return lng;
-    }
-
-    public void setLng(float lng) {
-        this.lng = lng;
-    }
-
     public String getUrl() {
         return url;
     }
@@ -104,19 +84,12 @@ public class Restaurant {
         this.url = url;
     }
 
-    public static class RestaurantDeserilizer implements JsonDeserializer {
-
-        @Override
-        public Restaurant deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-            Gson gson = new Gson();
-            Restaurant restaurant = gson.fromJson(json, Restaurant.class);
-            JsonObject jsonObject = json.getAsJsonObject();
-            if(jsonObject.has("address")) {
-                JsonObject jObj  = jsonObject.get("address").getAsJsonObject();
-                restaurant.setLat(jObj.get("lat").getAsFloat());
-                restaurant.setLng(jObj.get("lng").getAsFloat());
-            }
-            return restaurant;
-        }
+    public String getStatus() {
+        return status;
     }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
 }
