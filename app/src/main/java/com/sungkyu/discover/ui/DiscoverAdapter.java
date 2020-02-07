@@ -5,19 +5,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.sungkyu.discover.R;
+import com.sungkyu.discover.db.Entity.Restaurant;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHolder>{
 
     private final LayoutInflater mInflater;
+    private List<Restaurant> mRestaurant;
+    private Context mContext;
 
     public DiscoverAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
+        mRestaurant = new ArrayList<>();
+        mContext = context;
     }
 
     @NonNull
@@ -29,12 +39,16 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        if(mRestaurant.isEmpty()) return;
+        Restaurant restaurant = mRestaurant.get(position);
+        holder.reviewTextView.setText(restaurant.getDescription());
+        holder.shopNameTextView.setText(restaurant.getName());
+        Glide.with(mContext).load(restaurant.getImgUrl()).into(holder.imageView);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mRestaurant.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -53,5 +67,10 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
         public void onClick(View v) {
 
         }
+    }
+
+    public void addRestaurant(List<Restaurant> restaurants) {
+        mRestaurant.addAll(restaurants);
+        notifyDataSetChanged();
     }
 }
