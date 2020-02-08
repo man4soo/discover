@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 
 import com.sungkyu.discover.R;
+import com.sungkyu.discover.utils.Constants;
 import com.sungkyu.discover.viewModels.DiscoverViewModel;
 
 import javax.inject.Inject;

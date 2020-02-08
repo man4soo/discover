@@ -2,8 +2,10 @@ package com.sungkyu.discover.di.modules;
 
 import android.app.Application;
 
+import androidx.core.content.PermissionChecker;
 import androidx.room.Room;
 
+import com.sungkyu.discover.db.Dao.RestaurantDao;
 import com.sungkyu.discover.db.RestaurantDB;
 
 import javax.inject.Singleton;
@@ -21,5 +23,11 @@ public class DBModule {
                 RestaurantDB.class,
                 "RestaurantDB.db")
                 .build();
+    }
+
+    @Provides
+    @Singleton
+    RestaurantDao provideRestaurantDao(RestaurantDB restaurantDB) {
+        return restaurantDB.RestaurantDao();
     }
 }
