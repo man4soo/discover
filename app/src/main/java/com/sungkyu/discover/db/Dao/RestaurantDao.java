@@ -23,6 +23,4 @@ public interface RestaurantDao {
     @Query("SELECT * FROM restaurant WHERE id = :id")
     LiveData<Restaurant> get(int id);
 
-    @Query("SELECT * FROM restaurant WHERE id > :lastRefreshMax LIMIT 50")
-    Restaurant getRest(int lastRefreshMax);
 }

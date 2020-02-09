@@ -92,4 +92,12 @@ public class Restaurant {
         this.status = status;
     }
 
+    @Override
+    public String  toString() {
+        return " Name : " + name +
+                "\n Id : " + id +
+                "\n Description : " + description +
+                "\n Url : " + url;
+    }
+
 }

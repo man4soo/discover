@@ -22,6 +22,7 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
     private final LayoutInflater mInflater;
     private List<Restaurant> mRestaurant;
     private Context mContext;
+    private ItemClickListener mItemClickListener;
 
     public DiscoverAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
@@ -72,12 +73,23 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
         }
         @Override
         public void onClick(View v) {
-
+            if(mItemClickListener != null) mItemClickListener.onItemClick(mRestaurant.get(getAdapterPosition()));
         }
     }
 
     public void addRestaurant(List<Restaurant> restaurants) {
         mRestaurant.addAll(restaurants);
         notifyDataSetChanged();
+    }
+
+    public void setItemClickListener(ItemClickListener itemClickListener){
+        mItemClickListener = itemClickListener;
+    }
+
+    /*
+     * Interface to notify the clicked item.
+     */
+    public interface ItemClickListener {
+        void onItemClick(Restaurant r);
     }
 }

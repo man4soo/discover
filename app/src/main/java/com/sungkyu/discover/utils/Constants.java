@@ -13,4 +13,6 @@ public class Constants {
 
     public static int REQUEST_BATCH_NUMBER = 20;
 
+    public static int OFFSET_STRING_LEN = 7; // the length of "offset="
+
 }

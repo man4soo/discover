@@ -43,7 +43,6 @@ public class DataRepository {
 
     private void fetchData(final int start, final double lat, final double lng) {
         if(!mSet.add(start)) return;
-        Log.d(TAG, "lat : " + ", lng : " + lng);
         mExecutor.execute(() -> {
             int idx = start;
             while (idx <= Constants.REQUEST_BATCH_NUMBER + start) {
@@ -53,7 +52,7 @@ public class DataRepository {
                             @Override
                             public void onResponse(Call<List<Restaurant>> call, Response<List<Restaurant>> response) {
                                 String url = response.raw().request().url().toString();
-                                int currentIdx =Integer.valueOf(url.substring(url.indexOf("offset")+7));
+                                int currentIdx =Integer.valueOf(url.substring(url.indexOf("offset")+ Constants.OFFSET_STRING_LEN));
 
                                 if (response == null || response.body() == null ||  response.body().isEmpty()) {
                                     Log.i(TAG, "Server response is null or empty");
@@ -77,7 +76,7 @@ public class DataRepository {
 
                             }
                         });
-                idx += 2;
+                idx += Constants.DEFAULT_OFFSET;
             }
         });
     }
