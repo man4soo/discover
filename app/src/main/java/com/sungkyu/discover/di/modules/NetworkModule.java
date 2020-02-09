@@ -1,20 +1,13 @@
 package com.sungkyu.discover.di.modules;
 
-import android.app.Application;
-
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.sungkyu.discover.db.Entity.Restaurant;
 import com.sungkyu.discover.network.RestaurantNetworkService;
-
-import java.io.File;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import okhttp3.Cache;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

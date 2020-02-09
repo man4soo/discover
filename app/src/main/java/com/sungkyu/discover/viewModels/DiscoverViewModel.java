@@ -1,6 +1,5 @@
 package com.sungkyu.discover.viewModels;
 
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 

@@ -5,7 +5,6 @@ import android.app.Application;
 
 import com.sungkyu.discover.App;
 import com.sungkyu.discover.di.modules.ActivityModule;
-import com.sungkyu.discover.di.modules.RepositoyrModule;
 import com.sungkyu.discover.di.modules.DBModule;
 import com.sungkyu.discover.di.modules.RepositoyrModule;
 import com.sungkyu.discover.di.modules.ViewModelModule;

@@ -2,7 +2,6 @@ package com.sungkyu.discover.di.modules;
 
 import android.app.Application;
 
-import androidx.core.content.PermissionChecker;
 import androidx.room.Room;
 
 import com.sungkyu.discover.db.Dao.RestaurantDao;

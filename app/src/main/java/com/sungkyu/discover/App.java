@@ -7,7 +7,6 @@ import com.sungkyu.discover.di.DaggerAppComponent;
 
 import javax.inject.Inject;
 
-import dagger.android.DaggerApplication;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 

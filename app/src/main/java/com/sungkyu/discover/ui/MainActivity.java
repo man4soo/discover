@@ -1,22 +1,14 @@
 package com.sungkyu.discover.ui;
 
+import android.os.Bundle;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.sungkyu.discover.R;
 import com.sungkyu.discover.db.Entity.Restaurant;
-import com.sungkyu.discover.utils.Constants;
 import com.sungkyu.discover.viewModels.DiscoverViewModel;
 
 import javax.inject.Inject;
