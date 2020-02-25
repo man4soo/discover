@@ -43,6 +43,17 @@ public class Restaurant {
     @Expose
     private String url;
 
+    @SerializedName("isFavorite")
+    private boolean isFavorite;
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
+
     @NonNull
     public int getId() {
         return id;

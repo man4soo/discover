@@ -44,6 +44,10 @@ public class MainActivity extends AppCompatActivity implements DiscoverAdapter.I
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    public void saveFavorite(Restaurant r) {
+        mDiscoverViewModel.saveFavorite(r);
+    }
+
     @Override
     public void onItemClick(Restaurant r) {
         Toast.makeText(

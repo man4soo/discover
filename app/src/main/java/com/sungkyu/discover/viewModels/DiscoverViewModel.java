@@ -25,4 +25,8 @@ public class DiscoverViewModel extends ViewModel {
     public LiveData<List<Restaurant>> getRestaurants() {
         return mRestaurantList;
     }
+
+    public void saveFavorite(Restaurant r) {
+        mDataRepository.updateRestaurant(r);
+    }
 }

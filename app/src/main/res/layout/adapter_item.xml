@@ -4,6 +4,13 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
+    <CheckBox
+        android:id="@+id/checker"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:layout_gravity="center_vertical" />
+
     <ImageView
         android:id="@+id/image"
         android:layout_width="0dp"

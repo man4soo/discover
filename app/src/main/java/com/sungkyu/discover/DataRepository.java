@@ -41,6 +41,12 @@ public class DataRepository {
         return mRestaurantDao.getAll();
     }
 
+    public void updateRestaurant(final Restaurant r) {
+        mExecutor.execute(() -> {
+            mRestaurantDao.save(r);
+        });
+    }
+
     private void fetchData(final int start, final double lat, final double lng) {
         if(!mSet.add(start)) return;
         mExecutor.execute(() -> {
