@@ -44,6 +44,7 @@ public class Restaurant {
     private String url;
 
     @SerializedName("isFavorite")
+    @Expose
     private boolean isFavorite;
 
     public boolean isFavorite() {
@@ -108,7 +109,8 @@ public class Restaurant {
         return " Name : " + name +
                 "\n Id : " + id +
                 "\n Description : " + description +
-                "\n Url : " + url;
+                "\n Url : " + url +
+                "\n isFavorite : " + isFavorite;
     }
 
 }
